@@ -2,13 +2,18 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 export const analyzeStock = async (stock) => {
-  // Safe access to process.env for browser environments where it might be shimmed on window
-  const apiKey = (window.process && window.process.env && window.process.env.API_KEY) || '';
-  const ai = new GoogleGenAI({ apiKey });
-  
   const prompt = `Mindfully evaluate ${stock.name} (${stock.symbol}). Tone: Calm, Pink, Elegant.`;
 
   try {
+    // Safe access to API key with fallback to prevent crash
+    const apiKey = (window.process && window.process.env && window.process.env.API_KEY) || '';
+    
+    if (!apiKey) {
+      throw new Error("API Key missing");
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
+
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt,
@@ -29,6 +34,7 @@ export const analyzeStock = async (stock) => {
     });
     return JSON.parse(response.text || '{}');
   } catch (error) {
+    console.warn("Gemini Service Error (Falling back to default):", error);
     return {
       guidance: "The market is breathing quietly today. Observe the flow.",
       sentiment: "Mixed",

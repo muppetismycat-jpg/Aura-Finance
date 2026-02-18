@@ -10,11 +10,11 @@ export const TechnicalChart = ({ data, auraTone = 'Airy' }) => {
   const primaryColor = isLuminous ? '#fb7185' : auraTone === 'Grounding' ? '#e11d48' : '#fda4af';
 
   if (!data || data.length === 0) {
-    return html`<div className="h-[400px] w-full flex items-center justify-center text-pink-300 text-xs tracking-widest uppercase">Preparing Visuals...</div>`;
+    return html`<div className="h-full w-full flex items-center justify-center text-pink-300 text-xs tracking-widest uppercase">Preparing Visuals...</div>`;
   }
 
   return html`
-    <div className="w-full relative overflow-hidden" style=${{ height: '400px' }}>
+    <div className="w-full h-full relative overflow-hidden min-h-[200px]">
       <${Recharts.ResponsiveContainer} width="99%" height="100%">
         <${Recharts.AreaChart} data=${data} margin=${{ top: 20, right: 0, left: 0, bottom: 0 }}>
           <defs>
