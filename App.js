@@ -1,11 +1,11 @@
 
-import React, { useState, useEffect, useCallback } from 'https://esm.sh/react@^19.2.4';
-import htm from 'https://esm.sh/htm';
+import React, { useState, useEffect, useCallback } from 'react';
+import htm from 'htm';
 import { Layout } from './components/Layout.js';
 import { TechnicalChart } from './components/TechnicalChart.js';
 import { MOCK_STOCKS } from './constants.js';
 import { analyzeStock } from './services/geminiService.js';
-import * as Lucide from 'https://esm.sh/lucide-react@^0.574.0';
+import * as Lucide from 'lucide-react';
 
 const html = htm.bind(React.createElement);
 
@@ -45,10 +45,16 @@ const App = () => {
 
   return html`
     <${Layout} auraTone=${auraTone}>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
+      <!-- 
+        Grid Logic Fix:
+        - Added min-w-0 to all direct grid children to prevent flex/grid blowout.
+        - Removed xl:w-auto from right column to enforce grid track adherence.
+        - overflow-x-clip ensures no horizontal scroll within grid area.
+      -->
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 xl:gap-12 relative z-10 w-full items-start max-w-full overflow-x-clip">
         
         {/* Left Column: Ticker List */}
-        <aside className="lg:col-span-3 space-y-10">
+        <aside className="md:col-span-4 xl:col-span-3 space-y-8 min-w-0 w-full">
           <div className="relative group">
             <input 
               type="text" 
@@ -90,23 +96,23 @@ const App = () => {
         </aside>
 
         {/* Middle Column: Stock Details & Signal */}
-        <div className="lg:col-span-6 space-y-12">
-          <section className="bg-white/80 dark:bg-stone-900/80 prismatic-glass rounded-[70px] p-14 shadow-2xl relative overflow-hidden transition-all duration-1000">
+        <div className="md:col-span-8 xl:col-span-6 space-y-8 min-w-0 w-full">
+          <section className="bg-white/80 dark:bg-stone-900/80 prismatic-glass rounded-[60px] p-8 md:p-14 shadow-2xl relative overflow-hidden transition-all duration-1000">
              <div className=${`absolute top-0 left-1/2 -translate-x-1/2 w-full h-64 blur-[150px] pointer-events-none transition-all duration-1000 ${
                auraTone === 'Luminous' ? 'bg-pink-300/50' : auraTone === 'Grounding' ? 'bg-rose-900/20' : 'bg-rose-100/30'
              }`}></div>
 
-            <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-10 mb-14">
-              <div>
-                <h1 className="font-serif text-7xl mb-4 tracking-tighter text-stone-800 dark:text-stone-100 leading-none">${stock.name}</h1>
+            <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-10 mb-10">
+              <div className="min-w-0 flex-1">
+                <h1 className="font-serif text-5xl md:text-7xl mb-4 tracking-tighter text-stone-800 dark:text-stone-100 leading-none truncate pr-2">${stock.name}</h1>
                 <div className="flex items-center gap-5">
                   <span className="text-pink-500 font-black tracking-[0.5em] text-[11px] uppercase">${stock.symbol}</span>
                   <div className="w-2 h-2 bg-pink-300 rounded-full"></div>
                   <span className="text-pink-300 text-[11px] font-black uppercase italic">Celestial Real-Time</span>
                 </div>
               </div>
-              <div className="text-right">
-                <div className="text-7xl font-extralight tracking-tighter text-stone-800 dark:text-stone-100 mb-2 drop-shadow-sm">$${stock.price.toFixed(2)}</div>
+              <div className="text-right shrink-0">
+                <div className="text-5xl md:text-7xl font-extralight tracking-tighter text-stone-800 dark:text-stone-100 mb-2 drop-shadow-sm">$${stock.price.toFixed(2)}</div>
                 <div className=${`flex items-center justify-end gap-3 text-base font-black ${stock.change > 0 ? 'text-pink-500' : 'text-stone-400'}`}>
                   <${stock.change > 0 ? Lucide.TrendingUp : Lucide.TrendingDown} size=${22} strokeWidth=${3} />
                   <span>${stock.changePercent}%</span>
@@ -114,59 +120,59 @@ const App = () => {
               </div>
             </div>
 
-            <div className="rounded-[60px] p-6 relative z-10">
+            <div className="rounded-[40px] p-2 md:p-6 relative z-10">
               <${TechnicalChart} data=${stock.history} auraTone=${auraTone} />
             </div>
           </section>
 
           {/* The Rose Signal Section */}
-          <section className="bg-white/60 prismatic-glass rounded-[70px] p-14 space-y-12 relative shadow-2xl transition-all duration-1000">
-            <div className="flex items-center justify-between relative z-10">
+          <section className="bg-white/60 prismatic-glass rounded-[60px] p-8 md:p-14 space-y-12 relative shadow-2xl transition-all duration-1000">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
               <div className="flex items-center gap-6">
-                <div className=${`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-1000 shadow-xl ring-4 ring-white/50 ${
+                <div className=${`w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-1000 shadow-xl ring-4 ring-white/50 shrink-0 ${
                   auraTone === 'Luminous' ? 'bg-pink-300' : auraTone === 'Grounding' ? 'bg-rose-800' : 'bg-rose-100'
                 }`}>
                   <${Lucide.Sparkles} size=${32} className=${auraTone === 'Grounding' ? 'text-white' : 'text-pink-600'} />
                 </div>
                 <div>
-                  <h2 className="text-4xl font-serif text-stone-800 dark:text-stone-100 tracking-tighter leading-none mb-2">The Rose Signal</h2>
+                  <h2 className="text-3xl md:text-4xl font-serif text-stone-800 dark:text-stone-100 tracking-tighter leading-none mb-2">The Rose Signal</h2>
                   <p className="text-[11px] font-black text-pink-500 uppercase tracking-[0.3em] italic">AI Intuitive Flow</p>
                 </div>
               </div>
               ${analysis && html`
                 <div className=${getSentimentStyles(analysis.sentiment, analysis.auraTone)}>
                   <${Lucide.Globe} size=${18} className="animate-spin-slow opacity-80" />
-                  ${analysis.sentiment}
+                  <span className="whitespace-nowrap">${analysis.sentiment}</span>
                 </div>
               `}
             </div>
 
             ${loading ? html`
-              <div className="py-32 flex flex-col items-center justify-center space-y-10">
+              <div className="py-20 flex flex-col items-center justify-center space-y-10">
                 <div className="relative">
                   <div className="w-24 h-24 border-[4px] border-rose-100 border-t-pink-500 rounded-full animate-spin"></div>
                   <${Lucide.Heart} size=${32} className="absolute inset-0 m-auto text-pink-500 animate-pulse fill-pink-500/20" />
                 </div>
-                <p className="text-pink-500 font-black tracking-[0.4em] uppercase italic">Aligning frequencies of growth...</p>
+                <p className="text-pink-500 font-black tracking-[0.4em] uppercase italic text-center px-4">Aligning frequencies of growth...</p>
               </div>
             ` : html`
               <div className="space-y-12 relative z-10 animate-fade-in">
-                <div className="bg-white/95 p-12 rounded-[50px] shadow-inner leading-relaxed text-stone-900 font-medium text-2xl tracking-tighter border-2 border-pink-50">
+                <div className="bg-white/95 p-8 md:p-12 rounded-[50px] shadow-inner leading-relaxed text-stone-900 font-medium text-xl md:text-2xl tracking-tighter border-2 border-pink-50">
                   ${analysis?.guidance}
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <div className="p-10 bg-white/50 rounded-[50px] border border-pink-100 group transition-all duration-700 hover:shadow-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="p-8 md:p-10 bg-white/50 rounded-[50px] border border-pink-100 group transition-all duration-700 hover:shadow-2xl">
                     <h4 className="flex items-center gap-4 text-[11px] font-black tracking-[0.4em] text-pink-600 mb-6">
-                      <${Lucide.Info} size=${20} className="text-pink-400" /> Resonance Logic
+                      <${Lucide.Info} size=${20} className="text-pink-400 shrink-0" /> Resonance Logic
                     </h4>
-                    <p className="text-base text-stone-800 leading-relaxed font-medium">
+                    <p className="text-sm md:text-base text-stone-800 leading-relaxed font-medium">
                       ${analysis?.explanation}
                     </p>
                   </div>
-                  <div className="p-10 bg-white/50 rounded-[50px] border border-pink-100 group transition-all duration-700 hover:shadow-2xl">
+                  <div className="p-8 md:p-10 bg-white/50 rounded-[50px] border border-pink-100 group transition-all duration-700 hover:shadow-2xl">
                     <h4 className="flex items-center gap-4 text-[11px] font-black tracking-[0.4em] text-pink-600 mb-8">
-                      <${Lucide.Activity} size=${20} className="text-pink-400" /> Vital Pulse (RSI)
+                      <${Lucide.Activity} size=${20} className="text-pink-400 shrink-0" /> Vital Pulse (RSI)
                     </h4>
                     <div className="space-y-8">
                       <div className="flex justify-between items-end">
@@ -188,7 +194,7 @@ const App = () => {
         </div>
 
         {/* Right Column: Mindful Watch */}
-        <aside className="lg:col-span-3 space-y-12">
+        <aside className="md:col-span-12 xl:col-span-3 space-y-12 min-w-0 w-full">
           <section className="bg-white/80 prismatic-glass rounded-[56px] p-12 shadow-xl relative overflow-hidden group">
              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-pink-100 rounded-full blur-3xl opacity-50"></div>
             <h3 className="flex items-center gap-5 font-serif text-3xl mb-10 text-stone-800 relative z-10">

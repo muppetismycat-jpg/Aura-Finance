@@ -1,8 +1,11 @@
 
-import { GoogleGenAI, Type } from "https://esm.sh/@google/genai@^1.41.0";
+import { GoogleGenAI, Type } from "@google/genai";
 
 export const analyzeStock = async (stock) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Safe access to process.env for browser environments where it might be shimmed on window
+  const apiKey = (window.process && window.process.env && window.process.env.API_KEY) || '';
+  const ai = new GoogleGenAI({ apiKey });
+  
   const prompt = `Mindfully evaluate ${stock.name} (${stock.symbol}). Tone: Calm, Pink, Elegant.`;
 
   try {

@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'https://esm.sh/react@^19.2.4';
-import htm from 'https://esm.sh/htm';
-import * as Lucide from 'https://esm.sh/lucide-react@^0.574.0';
+import React, { useState, useEffect } from 'react';
+import htm from 'htm';
+import * as Lucide from 'lucide-react';
 
 const html = htm.bind(React.createElement);
 
@@ -24,7 +24,7 @@ export const Layout = ({ children, auraTone = 'Airy' }) => {
   };
 
   return html`
-    <div className="min-h-screen flex flex-col font-sans transition-all duration-1000 relative overflow-hidden selection:bg-pink-200 selection:text-pink-900">
+    <div className="min-h-screen flex flex-col font-sans transition-all duration-1000 relative overflow-x-hidden selection:bg-pink-200 selection:text-pink-900">
       {/* Global Background Breath */}
       <div className=${`fixed inset-0 pointer-events-none bg-gradient-to-tr ${getAuraGradient()} animate-aura-breath`}></div>
       
@@ -58,7 +58,7 @@ export const Layout = ({ children, auraTone = 'Airy' }) => {
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-14 relative z-10">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-14 relative z-10 overflow-hidden">
         ${children}
       </main>
 

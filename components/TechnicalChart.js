@@ -1,7 +1,7 @@
 
-import React from 'https://esm.sh/react@^19.2.4';
-import htm from 'https://esm.sh/htm';
-import * as Recharts from 'https://esm.sh/recharts@^3.7.0';
+import React from 'react';
+import htm from 'htm';
+import * as Recharts from 'recharts';
 
 const html = htm.bind(React.createElement);
 
@@ -9,9 +9,13 @@ export const TechnicalChart = ({ data, auraTone = 'Airy' }) => {
   const isLuminous = auraTone === 'Luminous';
   const primaryColor = isLuminous ? '#fb7185' : auraTone === 'Grounding' ? '#e11d48' : '#fda4af';
 
+  if (!data || data.length === 0) {
+    return html`<div className="h-[400px] w-full flex items-center justify-center text-pink-300 text-xs tracking-widest uppercase">Preparing Visuals...</div>`;
+  }
+
   return html`
-    <div className="h-[450px] w-full relative">
-      <${Recharts.ResponsiveContainer} width="100%" height="100%">
+    <div className="w-full relative overflow-hidden" style=${{ height: '400px' }}>
+      <${Recharts.ResponsiveContainer} width="99%" height="100%">
         <${Recharts.AreaChart} data=${data} margin=${{ top: 20, right: 0, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -50,7 +54,7 @@ export const TechnicalChart = ({ data, auraTone = 'Airy' }) => {
           />
         <//>
       <//>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-12 text-[9px] font-black uppercase tracking-[0.4em] text-pink-300 opacity-60">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-12 text-[9px] font-black uppercase tracking-[0.4em] text-pink-300 opacity-60 pointer-events-none">
         <span>Cycle Open</span>
         <div className="w-1.5 h-1.5 rounded-full bg-pink-100"></div>
         <span>Cycle Maturity</span>
