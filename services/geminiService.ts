@@ -1,10 +1,11 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { StockData, AIAnalysis } from "../types";
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+import { StockData, AIAnalysis } from "../types.ts";
 
 export const analyzeStock = async (stock: StockData): Promise<AIAnalysis> => {
+  // Always create a new instance to ensure up-to-date API key access
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+
   const prompt = `
     As a mindful financial analyst, evaluate the following stock data. 
     Use a calm, elegant, and supportive tone (avoid aggressive finance tropes like "crush" or "explode").

@@ -34,13 +34,18 @@
               }
             },
             animation: {
-              'aura-breath': 'aura-breath 10s ease-in-out infinite alternate',
-              'spin-slow': 'spin 8s linear infinite',
+              'aura-breath': 'aura-breath 12s ease-in-out infinite alternate',
+              'spin-slow': 'spin 12s linear infinite',
+              'orb-float': 'orb-float 20s ease-in-out infinite alternate',
             },
             keyframes: {
               'aura-breath': {
-                '0%': { transform: 'scale(1) translate(0, 0)', opacity: 0.4 },
-                '100%': { transform: 'scale(1.2) translate(3%, 2%)', opacity: 0.7 },
+                '0%': { transform: 'scale(1) translate(0, 0)', opacity: 0.35 },
+                '100%': { transform: 'scale(1.2) translate(4%, 3%)', opacity: 0.65 },
+              },
+              'orb-float': {
+                '0%': { transform: 'translate(0, 0) scale(1)' },
+                '100%': { transform: 'translate(10%, 10%) scale(1.1)' },
               }
             }
           }
@@ -64,11 +69,11 @@
         height: 100%;
         pointer-events: none;
         z-index: 9999;
-        opacity: 0.05;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.06;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       }
       .dark .grain-overlay {
-        opacity: 0.1;
+        opacity: 0.12;
       }
       ::-webkit-scrollbar {
         width: 6px;
@@ -77,28 +82,29 @@
         background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #d68d9a44;
+        background: #d68d9a33;
         border-radius: 10px;
       }
       .dark ::-webkit-scrollbar-thumb {
         background: #d68d9a22;
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "recharts": "https://esm.sh/recharts@^3.7.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.574.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
-  }
-}
-</script>
-</head>
+    <script type="importmap">
+    {
+      "imports": {
+        "recharts": "https://esm.sh/recharts@^3.7.0",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "react": "https://esm.sh/react@^19.2.4",
+        "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+        "lucide-react": "https://esm.sh/lucide-react@^0.574.0",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+      }
+    }
+    </script>
+  </head>
   <body class="bg-[#fffafb] dark:bg-[#1a1617] text-stone-900 dark:text-stone-100 min-h-screen">
     <div class="grain-overlay"></div>
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

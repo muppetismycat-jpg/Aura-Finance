@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   Brush
 } from 'recharts';
-import { StockData } from '../types';
+import { StockData } from '../types.ts';
 
 interface TechnicalChartProps {
   data: StockData['history'];
@@ -23,19 +23,19 @@ const CustomTooltip = ({ active, payload, label, isDark }: any) => {
     return (
       <div className={`
         p-5 rounded-[24px] shadow-2xl border-none backdrop-blur-2xl
-        ${isDark ? 'bg-stone-900/90 text-stone-100 ring-1 ring-pink-900/30' : 'bg-white/90 text-stone-800 ring-1 ring-pink-100'}
+        ${isDark ? 'bg-stone-900/95 text-stone-100 ring-2 ring-pink-900/50' : 'bg-white/95 text-stone-800 ring-2 ring-pink-100'}
         flex flex-col gap-1 transition-all duration-300
       `}>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-pink-400 font-bold mb-1">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-pink-500 font-black mb-1">
           {new Date(label).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         </p>
         <div className="flex items-baseline gap-2">
           <span className="text-2xl font-serif font-semibold text-stone-800 dark:text-white">${price.toFixed(2)}</span>
-          <span className="text-[10px] text-stone-400 font-medium tracking-widest">USD</span>
+          <span className="text-[10px] text-stone-400 font-bold tracking-widest">USD</span>
         </div>
-        <div className="flex items-center gap-1.5 mt-2">
-          <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-pink-400 shadow-[0_0_8px_#f472b6]' : 'bg-[#d68d9a]'}`}></div>
-          <span className="text-[10px] italic text-stone-500 font-light">Serene valuation</span>
+        <div className="flex items-center gap-2 mt-2">
+          <div className={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-pink-400 shadow-[0_0_12px_#f472b6]' : 'bg-pink-500'}`}></div>
+          <span className="text-[10px] italic text-stone-600 dark:text-stone-400 font-medium tracking-tight">Serene valuation</span>
         </div>
       </div>
     );
@@ -63,22 +63,22 @@ export const TechnicalChart: React.FC<TechnicalChartProps> = ({ data, auraTone =
 
   const getAuraColor = () => {
     switch (auraTone) {
-      case 'Luminous': return isDark ? '#f472b6' : '#d68d9a';
-      case 'Grounding': return isDark ? '#ec4899' : '#be185d';
+      case 'Luminous': return isDark ? '#f472b6' : '#ec4899';
+      case 'Grounding': return isDark ? '#db2777' : '#9d174d';
       default: return isDark ? '#e9b7b7' : '#d68d9a';
     }
   };
 
   const primaryColor = getAuraColor();
-  const gridColor = isDark ? 'rgba(214, 141, 154, 0.05)' : 'rgba(214, 141, 154, 0.1)';
-  const textColor = isDark ? '#704c5e' : '#d68d9a';
-  const brushColor = isDark ? 'rgba(26, 22, 23, 0.4)' : 'rgba(255, 250, 251, 0.6)';
+  const gridColor = isDark ? 'rgba(214, 141, 154, 0.08)' : 'rgba(214, 141, 154, 0.15)';
+  const textColor = isDark ? '#d68d9a' : '#704c5e';
+  const brushColor = isDark ? 'rgba(26, 22, 23, 0.6)' : 'rgba(255, 250, 251, 0.8)';
 
   return (
     <div className="h-[400px] w-full mt-4 flex flex-col relative group">
       {/* Background Aura Glow */}
-      <div className={`absolute inset-0 opacity-25 blur-[100px] rounded-full transition-all duration-1000 ${
-        auraTone === 'Luminous' ? 'bg-rose-200/30' : auraTone === 'Grounding' ? 'bg-pink-300/20' : 'bg-pink-100/20'
+      <div className={`absolute inset-0 opacity-30 blur-[110px] rounded-full transition-all duration-1000 ${
+        auraTone === 'Luminous' ? 'bg-rose-300/40' : auraTone === 'Grounding' ? 'bg-pink-400/30' : 'bg-pink-200/30'
       }`}></div>
       
       <div className="flex-1 relative z-10">
@@ -86,11 +86,11 @@ export const TechnicalChart: React.FC<TechnicalChartProps> = ({ data, auraTone =
           <AreaChart data={data} margin={{ top: 20, right: 0, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={primaryColor} stopOpacity={0.3}/>
+                <stop offset="5%" stopColor={primaryColor} stopOpacity={0.4}/>
                 <stop offset="95%" stopColor={primaryColor} stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <CartesianGrid vertical={false} stroke={gridColor} strokeDasharray="5 5" />
+            <CartesianGrid vertical={false} stroke={gridColor} strokeDasharray="6 6" />
             <XAxis 
               dataKey="date" 
               hide
@@ -100,35 +100,35 @@ export const TechnicalChart: React.FC<TechnicalChartProps> = ({ data, auraTone =
               domain={['auto', 'auto']}
               axisLine={false}
               tickLine={false}
-              tick={{ fill: textColor, fontSize: 10, fontWeight: 600, letterSpacing: '0.05em' }}
+              tick={{ fill: textColor, fontSize: 11, fontWeight: 700, letterSpacing: '0.05em' }}
               tickFormatter={(val) => `$${val}`}
             />
             <Tooltip 
               content={<CustomTooltip isDark={isDark} />}
-              cursor={{ stroke: primaryColor, strokeWidth: 1.5, strokeDasharray: '6 6' }}
+              cursor={{ stroke: primaryColor, strokeWidth: 2, strokeDasharray: '8 8' }}
             />
             <Area 
               type="monotone" 
               dataKey="price" 
               stroke={primaryColor} 
-              strokeWidth={4}
+              strokeWidth={5}
               fillOpacity={1} 
               fill="url(#colorPrice)" 
-              animationDuration={2500}
-              activeDot={{ r: 8, strokeWidth: 0, fill: primaryColor, className: 'drop-shadow-[0_0_12px_rgba(214,141,154,0.9)]' }}
+              animationDuration={3000}
+              activeDot={{ r: 9, strokeWidth: 0, fill: primaryColor, className: 'drop-shadow-[0_0_15px_rgba(214,141,154,1)]' }}
             />
             <Brush 
               dataKey="date" 
-              height={35} 
+              height={40} 
               stroke={primaryColor}
               fill={brushColor}
-              travellerWidth={12}
+              travellerWidth={14}
               gap={5}
-              className="opacity-40 hover:opacity-100 transition-opacity duration-500"
+              className="opacity-50 hover:opacity-100 transition-opacity duration-700"
               style={{
-                fontSize: '9px',
+                fontSize: '10px',
                 fontFamily: 'Inter',
-                fontWeight: 600
+                fontWeight: 700
               }}
             >
               <AreaChart data={data}>
@@ -137,7 +137,7 @@ export const TechnicalChart: React.FC<TechnicalChartProps> = ({ data, auraTone =
                   dataKey="price" 
                   stroke={primaryColor} 
                   fill={primaryColor} 
-                  fillOpacity={0.1}
+                  fillOpacity={0.15}
                   strokeWidth={1}
                 />
               </AreaChart>
@@ -145,7 +145,7 @@ export const TechnicalChart: React.FC<TechnicalChartProps> = ({ data, auraTone =
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      <div className="flex justify-between items-center px-2 mt-4 text-[10px] text-pink-400 font-bold tracking-[0.3em] uppercase relative z-10">
+      <div className="flex justify-between items-center px-2 mt-6 text-[11px] text-pink-500 dark:text-pink-300 font-black tracking-[0.4em] uppercase relative z-10">
         <span className="opacity-80">{new Date(data[0].date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
         <span className="opacity-40 italic font-light lowercase tracking-normal">The Flow of Abundance</span>
         <span className="opacity-80">{new Date(data[data.length - 1].date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
