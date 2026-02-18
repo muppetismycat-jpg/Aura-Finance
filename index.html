@@ -22,15 +22,14 @@
           extend: {
             colors: {
               aura: {
-                pink: '#d68d9a',
-                blush: '#f4dada',
-                peony: '#e9b7b7',
-                rose: '#ffb7b2',
-                quartz: '#fce4ec',
-                berry: '#704c5e',
-                lavender: '#e2d1f9',
-                sage: '#5f634f',
-                charcoal: '#1c1917',
+                pink: '#fb7185',
+                blush: '#fff1f2',
+                peony: '#fda4af',
+                rose: '#f43f5e',
+                quartz: '#fff5f7',
+                berry: '#881337',
+                lavender: '#f5d0fe',
+                charcoal: '#1a1617',
               }
             },
             animation: {
@@ -40,12 +39,12 @@
             },
             keyframes: {
               'aura-breath': {
-                '0%': { transform: 'scale(1) translate(0, 0)', opacity: 0.35 },
-                '100%': { transform: 'scale(1.2) translate(4%, 3%)', opacity: 0.65 },
+                '0%': { transform: 'scale(1) translate(0, 0)', opacity: 0.4 },
+                '100%': { transform: 'scale(1.25) translate(5%, 3%)', opacity: 0.75 },
               },
               'orb-float': {
                 '0%': { transform: 'translate(0, 0) scale(1)' },
-                '100%': { transform: 'translate(10%, 10%) scale(1.1)' },
+                '100%': { transform: 'translate(12%, 12%) scale(1.15)' },
               }
             }
           }
@@ -69,11 +68,11 @@
         height: 100%;
         pointer-events: none;
         z-index: 9999;
-        opacity: 0.06;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.08;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       }
       .dark .grain-overlay {
-        opacity: 0.12;
+        opacity: 0.15;
       }
       ::-webkit-scrollbar {
         width: 6px;
@@ -82,11 +81,16 @@
         background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #d68d9a33;
+        background: #fb718544;
         border-radius: 10px;
       }
       .dark ::-webkit-scrollbar-thumb {
-        background: #d68d9a22;
+        background: #fb718522;
+      }
+      
+      /* Halo behind the whole app */
+      .bg-pink-halo {
+        background: radial-gradient(circle at center, rgba(251, 113, 133, 0.08) 0%, transparent 70%);
       }
     </style>
     <script type="importmap">
@@ -102,8 +106,9 @@
     }
     </script>
   </head>
-  <body class="bg-[#fffafb] dark:bg-[#1a1617] text-stone-900 dark:text-stone-100 min-h-screen">
+  <body class="bg-aura-quartz dark:bg-[#1a1617] text-stone-900 dark:text-stone-100 min-h-screen">
     <div class="grain-overlay"></div>
+    <div class="fixed inset-0 bg-pink-halo pointer-events-none"></div>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>

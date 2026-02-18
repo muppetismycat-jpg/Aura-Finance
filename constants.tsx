@@ -3,15 +3,15 @@ import React from 'react';
 import { StockData } from './types';
 
 export const COLORS = {
-  primary: '#d68d9a', // Dusty Rose
-  secondary: '#f4dada', // Blush
-  accent: '#fce4ec', // Rose Quartz
-  background: '#fffafb', // Soft pink hint
-  text: '#1c1917',
-  muted: '#78716c',
-  success: '#d68d9a',
-  warning: '#e9b7b7',
-  danger: '#704c5e',
+  primary: '#fb7185', // Peony Pink
+  secondary: '#fff1f2', // Softest Blush
+  accent: '#fff5f7', // Rose Quartz Background
+  background: '#fffafb', 
+  text: '#1a1617',
+  muted: '#881337',
+  success: '#fb7185',
+  warning: '#fda4af',
+  danger: '#881337',
 };
 
 export const MOCK_STOCKS: Record<string, StockData> = {
@@ -33,12 +33,12 @@ export const MOCK_STOCKS: Record<string, StockData> = {
     },
     history: Array.from({ length: 30 }, (_, i) => ({
       date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      price: 175 + Math.random() * 20
+      price: 180 + Math.random() * 15
     })),
     news: [
-      "Apple expands service offerings in emerging markets.",
-      "Regulatory scrutiny increases over App Store policies.",
-      "Analysts remain optimistic about upcoming hardware cycle."
+      "Apple's ecosystem sees record engagement in Rose-tinted accessories.",
+      "Mindful hardware cycles drive long-term sustainability.",
+      "Market sentiment turns increasingly rosy for the tech giant."
     ]
   },
   'NVDA': {
@@ -59,12 +59,12 @@ export const MOCK_STOCKS: Record<string, StockData> = {
     },
     history: Array.from({ length: 30 }, (_, i) => ({
       date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      price: 700 + Math.random() * 200
+      price: 750 + Math.random() * 150
     })),
     news: [
-      "New AI chip architecture expected to dominate data centers.",
-      "Short-term pull back seen as healthy after massive rally.",
-      "Supply chain efficiencies improving across the globe."
+      "AI energy levels continue to peak, creating a vibrant market aura.",
+      "Strategic alignment with deep-learning flows suggests resilience.",
+      "The frequency of high-performance computing remains luminous."
     ]
   },
   'MSFT': {
@@ -85,12 +85,12 @@ export const MOCK_STOCKS: Record<string, StockData> = {
     },
     history: Array.from({ length: 30 }, (_, i) => ({
       date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      price: 390 + Math.random() * 30
+      price: 400 + Math.random() * 25
     })),
     news: [
-      "Cloud growth stabilizes with consistent enterprise adoption.",
-      "Integration of Copilot across Office 365 yields productivity gains.",
-      "Dividend increase announced for long-term shareholders."
+      "Cloud horizons expand with a soft, steady momentum.",
+      "Intuitive integration of AI features enhances the user soul.",
+      "Abundance flows through diversified revenue streams."
     ]
   }
 };
